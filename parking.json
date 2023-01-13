@@ -82,17 +82,17 @@
 							"TerminalAlias": "Terminal6",
 							"Version": "1.2",
 							"ConfigCode": "Code Test6",
-							"ConfigDate": "12/11/2019 12:13:25",
+							"ConfigDate": "13/12/2023 14:08:25",
 							"DevicesInfo": [
 								{
 									"DeviceId": 0,
-									"DeviceDescription": "test description",
-									"DeviceVersion": "versión test"
+									"DeviceDescription": "test description6",
+									"DeviceVersion": "versión test6"
 								}
 							],
 							"TerminalMode": {
 								"TerminalNumber": 6,
-								"TerminalAlias": " Terminal5",
+								"TerminalAlias": " Terminal6",
 								"Locked": true,
 								"Emergency": true,
 								"FreeExit": true,
@@ -103,22 +103,22 @@
 							},
 							"TerminalState": {
 								"TerminalNumber": 6,
-								"TerminalAlias": " Terminal5",
+								"TerminalAlias": " Terminal6",
 								"ServiceStatus": 10,
 								"OperationStatus": 10,
 								"VehiclePresent": true,
 								"VehicleType": 0,
-								"VehicleTypeDescription": "vehicle test",
-								"LicensePlate": "8240jcm",
+								"VehicleTypeDescription": "vehicle test6",
+								"LicensePlate": "6969xxl",
 								"ValidationResult": 0,
-								"ValidationResultDescription": "testdescription",
-								"AmountToPay": "12",
+								"ValidationResultDescription": "testdescription 6",
+								"AmountToPay": "24",
 								"BarrierOpened": true,
 								"BarrierLoopActive": true,
 								"CustomerIdentified": true,
 								"CustomerType": 0,
-								"CustomerTypeDescription": "prueba",
-								"CustomerCode": "test"
+								"CustomerTypeDescription": "prueba 6",
+								"CustomerCode": "test6"
 							}	
 						},
 						"GetActiveAlarms":

@@ -8,6 +8,11 @@ sudo apt install python3-pip
 pip3 install Flask
 pip3 install Flask-HTTPAuth
 
+#For curl request ...
+pip install pycurl
+pip install certifi
+
+
 Example Commandes qu'on peut exécuter dans curl
 
 GetCatalog
@@ -40,6 +45,22 @@ p.e
 curl -i http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/ParkingInfoAlias/Parking7 -u"axiome:concept"
 
 
+
+SendcontrolCommand
+
+
+You can post a JSON file using Curl if you pass the filename in the -d command line parameter after the "@" symbol:
+https://reqbin.com/req/c-d2nzjn3z/curl-post-body
+curl -X POST https://reqbin.com/echo/post/json -d @filename
+
+-d @/home/icaro/Bureau/came/RESTfull/command.json
+
+curl -X POST http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/ControlCommand -H "Content-Type: application/json" -d /home/icaro/Bureau/came/RESTfull/command.json
+
+OK
+curl -v -X POST http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/ControlCommand -H "Content-Type: application/json" -d '{"a":1,"b":2}'
+
+
 default
 curl -i http://localhost:5000
 
@@ -48,6 +69,8 @@ from flask import Flask
 from flask_httpauth import HTTPBasicAuth #pip install Flask-HTTPAuth
 from flask import jsonify
 from flask import request
+
+
 from werkzeug.security import generate_password_hash, check_password_hash
 import json 
 import os,sys #For path file ;)
@@ -60,7 +83,7 @@ BASE_WEB_ADDRESS="/Int/Terminals/TerminaLsWebApi/Terminals/" #Adresse de base de
 hostname ="localhost" # ip ... ou 127.0.0.1 pour tests
 PORT=5000 #Port RESTfull web server
 EXT_JSON_FILE="parking.json" #fichier de base de données externe
-PARKING_NUM='7'
+
 
 """ login:pwd"""
 users = {
@@ -118,12 +141,36 @@ def GetParkingInfo(parkingId):
 def GetParkingInfoAlias(parkingAlias):
 	""" This operation is used to obtain the car park state summary 14"""
 	
-	
 	for key,value in parkingDB.items():
 		if value[2]==parkingAlias: #parkingInfoValue ?
 			return parkingDB[key][1]
 		
 	return "ParkingInfoAlias not found\n"
+
+
+@app.route(BASE_WEB_ADDRESS+'ControlCommand',methods=['POST'])
+#@auth.login_required
+def SendcontrolCommand():
+	""" VIRTUEL send a ctrl. command to a terminal (open barrier ,close ) pags 17 """
+	data={"Result":0,"Message":"String"}
+	#data = request.get_json(force=True)
+	#data = request.json()	
+	#print ("-----",data)
+	#return jsonify(data)
+	
+	
+
+	if request.headers['Content-Type'] != 'application/json':
+		current_app.logger.debug(request.headers['Content-Type'])
+		return jsonify(msg=_('Header Error'))
+
+	#data = json.loads(request.data)
+	data=request.get_json()
+
+	#data= request.args.get("ParkingNumber")
+	
+	return "---"
+
 	
 if __name__ == "__main__":
 	
