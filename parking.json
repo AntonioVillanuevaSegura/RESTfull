@@ -1,145 +1,162 @@
-{
-	"5":
-		{
-			"GetTerminalInfo":
+{"7":
+	[
 			{
-				"TerminalType": 0,
-				"TerminalNumber": 5,
-				"TerminalAlias": "Terminal5",
-				"Version": "1.2",
-				"ConfigCode": "Code Test",
-				"ConfigDate": "12/11/2019 12:13:25",
-				"DevicesInfo": [
+				"5":
 					{
-						"DeviceId": 0,
-						"DeviceDescription": "test description",
-						"DeviceVersion": "versión test"
+						"GetTerminalInfo":
+						{
+							"TerminalType": 0,
+							"TerminalNumber": 5,
+							"TerminalAlias": "Terminal5",
+							"Version": "1.2",
+							"ConfigCode": "Code Test",
+							"ConfigDate": "12/11/2019 12:13:25",
+							"DevicesInfo": [
+								{
+									"DeviceId": 0,
+									"DeviceDescription": "test description",
+									"DeviceVersion": "versión test"
+								}
+							],
+							"TerminalMode": {
+								"TerminalNumber": 5,
+								"TerminalAlias": " Terminal5",
+								"Locked": true,
+								"Emergency": true,
+								"FreeExit": true,
+								"PaidAssisted": true,
+								"WithoutAntipass": true,
+								"FloodgateDisabled": true,
+								"LPRMode": 10
+							},
+							"TerminalState": {
+								"TerminalNumber": 5,
+								"TerminalAlias": " Terminal5",
+								"ServiceStatus": 10,
+								"OperationStatus": 10,
+								"VehiclePresent": true,
+								"VehicleType": 0,
+								"VehicleTypeDescription": "vehicle test",
+								"LicensePlate": "8240jcm",
+								"ValidationResult": 0,
+								"ValidationResultDescription": "testdescription",
+								"AmountToPay": "12",
+								"BarrierOpened": true,
+								"BarrierLoopActive": true,
+								"CustomerIdentified": true,
+								"CustomerType": 0,
+								"CustomerTypeDescription": "prueba",
+								"CustomerCode": "test"
+							}	
+						},
+						"GetActiveAlarms":
+						{
+							"AlarmsInfo": [
+							{
+								"AlarmCode": 0,
+								"AlarmDescription": "Sin papel",
+								"AlarmSubcode": 1
+							}
+							]
+						},
+						"ParkingTerminals":
+						{				
+							"TerminalNumber": 5,
+							"TerminalAlias": "Terminal5",
+							"SubscriptionTypes": [
+							40
+							],
+							"AdditionalInfo": {
+							"Description": "terminal de entrada",
+							"TerminalType": 0
+							}				
+						}			
 					}
-				],
-				"TerminalMode": {
-					"TerminalNumber": 5,
-					"TerminalAlias": " Terminal5",
-					"Locked": true,
-					"Emergency": true,
-					"FreeExit": true,
-					"PaidAssisted": true,
-					"WithoutAntipass": true,
-					"FloodgateDisabled": true,
-					"LPRMode": 10
-				},
-				"TerminalState": {
-					"TerminalNumber": 5,
-					"TerminalAlias": " Terminal5",
-					"ServiceStatus": 10,
-					"OperationStatus": 10,
-					"VehiclePresent": true,
-					"VehicleType": 0,
-					"VehicleTypeDescription": "vehicle test",
-					"LicensePlate": "8240jcm",
-					"ValidationResult": 0,
-					"ValidationResultDescription": "testdescription",
-					"AmountToPay": "12",
-					"BarrierOpened": true,
-					"BarrierLoopActive": true,
-					"CustomerIdentified": true,
-					"CustomerType": 0,
-					"CustomerTypeDescription": "prueba",
-					"CustomerCode": "test"
-				}	
-			},
-			"GetActiveAlarms":
-			{
-				"AlarmsInfo": [
-				{
-					"AlarmCode": 0,
-					"AlarmDescription": "Sin papel",
-					"AlarmSubcode": 1
-				}
-				]
-			},
-			"ParkingTerminals":
-			{				
-				"TerminalNumber": 5,
-				"TerminalAlias": "Terminal5",
-				"SubscriptionTypes": [
-				40
-				],
-				"AdditionalInfo": {
-				"Description": "terminal de entrada",
-				"TerminalType": 0
-				}				
-			}			
-		}
+					,
+				"6":
+					{
+						"GetTerminalInfo":
+						{
+							"TerminalType": 0,
+							"TerminalNumber": 6,
+							"TerminalAlias": "Terminal6",
+							"Version": "1.2",
+							"ConfigCode": "Code Test6",
+							"ConfigDate": "12/11/2019 12:13:25",
+							"DevicesInfo": [
+								{
+									"DeviceId": 0,
+									"DeviceDescription": "test description",
+									"DeviceVersion": "versión test"
+								}
+							],
+							"TerminalMode": {
+								"TerminalNumber": 6,
+								"TerminalAlias": " Terminal5",
+								"Locked": true,
+								"Emergency": true,
+								"FreeExit": true,
+								"PaidAssisted": true,
+								"WithoutAntipass": true,
+								"FloodgateDisabled": true,
+								"LPRMode": 10
+							},
+							"TerminalState": {
+								"TerminalNumber": 6,
+								"TerminalAlias": " Terminal5",
+								"ServiceStatus": 10,
+								"OperationStatus": 10,
+								"VehiclePresent": true,
+								"VehicleType": 0,
+								"VehicleTypeDescription": "vehicle test",
+								"LicensePlate": "8240jcm",
+								"ValidationResult": 0,
+								"ValidationResultDescription": "testdescription",
+								"AmountToPay": "12",
+								"BarrierOpened": true,
+								"BarrierLoopActive": true,
+								"CustomerIdentified": true,
+								"CustomerType": 0,
+								"CustomerTypeDescription": "prueba",
+								"CustomerCode": "test"
+							}	
+						},
+						"GetActiveAlarms":
+						{
+							"AlarmsInfo": [
+							{
+								"AlarmCode": 0,
+								"AlarmDescription": "Sin papel",
+								"AlarmSubcode": 1
+							}
+							]
+						},
+						"ParkingTerminals":
+						{				
+							"TerminalNumber": 6,
+							"TerminalAlias": "Terminal6",
+							"SubscriptionTypes": [
+							40
+							],
+							"AdditionalInfo": {
+							"Description": "terminal de salida",
+							"TerminalType": 0
+							}				
+						}			
+					}		
+			}
 		,
-	"6":
-		{
-			"GetTerminalInfo":
 			{
-				"TerminalType": 0,
-				"TerminalNumber": 6,
-				"TerminalAlias": "Terminal6",
-				"Version": "1.2",
-				"ConfigCode": "Code Test6",
-				"ConfigDate": "12/11/2019 12:13:25",
-				"DevicesInfo": [
-					{
-						"DeviceId": 0,
-						"DeviceDescription": "test description",
-						"DeviceVersion": "versión test"
-					}
-				],
-				"TerminalMode": {
-					"TerminalNumber": 6,
-					"TerminalAlias": " Terminal5",
-					"Locked": true,
-					"Emergency": true,
-					"FreeExit": true,
-					"PaidAssisted": true,
-					"WithoutAntipass": true,
-					"FloodgateDisabled": true,
-					"LPRMode": 10
-				},
-				"TerminalState": {
-					"TerminalNumber": 6,
-					"TerminalAlias": " Terminal5",
-					"ServiceStatus": 10,
-					"OperationStatus": 10,
-					"VehiclePresent": true,
-					"VehicleType": 0,
-					"VehicleTypeDescription": "vehicle test",
-					"LicensePlate": "8240jcm",
-					"ValidationResult": 0,
-					"ValidationResultDescription": "testdescription",
-					"AmountToPay": "12",
-					"BarrierOpened": true,
-					"BarrierLoopActive": true,
-					"CustomerIdentified": true,
-					"CustomerType": 0,
-					"CustomerTypeDescription": "prueba",
-					"CustomerCode": "test"
-				}	
-			},
-			"GetActiveAlarms":
-			{
-				"AlarmsInfo": [
-				{
-					"AlarmCode": 0,
-					"AlarmDescription": "Sin papel",
-					"AlarmSubcode": 1
+				"ParkingOffLine": false,
+				"OfflineTerminalsCount": 0,
+				"OutOfOrderTerminalsCount": 0,
+				"MaintenanceRequestTerminalsCount": 0,
+				"LicenseInfo": {
+					"LicenseState": 10,
+					"Days": 20
 				}
-				]
-			},
-			"ParkingTerminals":
-			{				
-				"TerminalNumber": 6,
-				"TerminalAlias": "Terminal6",
-				"SubscriptionTypes": [
-				40
-				],
-				"AdditionalInfo": {
-				"Description": "terminal de salida",
-				"TerminalType": 0
-				}				
-			}			
-		}		
+			}
+		,"Parking7"
+	]
 }
+
