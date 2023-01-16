@@ -12,7 +12,6 @@ pip3 install Flask-HTTPAuth
 pip install pycurl
 pip install certifi
 
-
 Example Commandes qu'on peut exécuter dans curl
 
 SubscribeCatalog (Déployé virtuellement)
@@ -23,6 +22,9 @@ curl -X POST -H "Content-type: application/json"  http://localhost:5000/Int/Term
 
 SubscribeTerminals
 curl -X POST -H "Content-type: application/json" -d @terminalSubs.json http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/TerminalsSubscriptions -u"axiome:concept"
+
+UnSubscribeTerminals
+curl -X POST -H "Content-type: application/json"  http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/TerminalsSubscriptions/1234 -u"axiome:concept"
 
 GetCatalog
 curl -i http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/Catalog/{$PARKING_NUM} -u"axiome:concept"
@@ -157,6 +159,17 @@ def SubscribeTerminals():
 	resp={"Result": 0,"Message": "string"} #Response msg
 	return resp
 
+
+@app.route(BASE_WEB_ADDRESS+'TerminalsSubscriptions/'+'<SubscriptionId>',methods=['POST'])
+@auth.login_required
+def UnSubscribeTerminals(SubscriptionId):
+	""" VIRTUELLE This operation will be used to subscribe to the reception
+	 of terminals.
+	{Lince Server URL}/api/V1.0/Terminals/TerminalsSubscriptions
+	"""
+	
+	resp={"Result": 0,"Message": "string"} #Response msg
+	return resp
 
 @app.route(BASE_WEB_ADDRESS+'Catalog/'+'<parkingId>',methods=['GET'])
 @auth.login_required
