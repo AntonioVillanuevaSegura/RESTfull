@@ -1,0 +1,21 @@
+{
+	"OperatorId": "OperatorExample",
+	"SubscriptionId": "1234",
+	"ParkingNumber": 7,
+	"ParkingAlias": "Parking7",
+	"SubscriptionType": 0,
+	"DestinationURL": "http://test.parkare.com/webapi/",
+	"ParkingTerminals": [
+		{
+		"TerminalNumber": 5,
+		"TerminalAlias": "terminal5",
+		"SubscriptionTypes": [
+		40
+		],
+		"AdditionalInfo": {
+		"Description": "desciption",
+		"TerminalType": 0
+		}
+	}
+]
+}

@@ -15,6 +15,15 @@ pip install certifi
 
 Example Commandes qu'on peut exécuter dans curl
 
+SubscribeCatalog (Déployé virtuellement)
+curl -X POST -H "Content-type: application/json" -d @catalogSubs.json http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/CatalogSubscriptions -u"axiome:concept"
+
+UnSubscribeCatalog
+curl -X POST -H "Content-type: application/json"  http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/CatalogSubscriptions/1234 -u"axiome:concept"
+
+SubscribeTerminals
+curl -X POST -H "Content-type: application/json" -d @terminalSubs.json http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/TerminalsSubscriptions -u"axiome:concept"
+
 GetCatalog
 curl -i http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/Catalog/{$PARKING_NUM} -u"axiome:concept"
 p.e
@@ -58,7 +67,6 @@ curl -v -X POST -H "Content-type: application/json" -d @commandLPR.json http://l
 IssueTicket
 curl -v -X POST -H "Content-type: application/json" -d @commandTicket.json http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/tiket
 
-
 default
 curl -i http://localhost:5000
 
@@ -100,6 +108,54 @@ def verify_password(username, password):
 def default():
 	"""page Web par défaut """
 	return jsonify({'Base Web address':BASE_WEB_ADDRESS})
+
+
+@app.route(BASE_WEB_ADDRESS+'CatalogSubscriptions',methods=['POST'])
+@auth.login_required
+def SubscribeCatalog():
+	""" VIRTUELLE This operation will be used to subscribe to the reception
+	 of terminal catalogues in a car a car park.
+	{Lince Server URL}/api/V1.0/Terminals/CatalogSubscriptions
+	"""
+	
+	data=request.get_json()
+	
+	if data!="":
+		print ("SubscriptionType = ",data["SubscriptionType"],",",
+			" DestinationURLdata = ",data["DestinationURL"])
+	resp={"Result": 0,"Message": "string"} #Response msg
+	return resp
+
+@app.route(BASE_WEB_ADDRESS+'CatalogSubscriptions/'+'<SubscriptionId>',methods=['POST'])
+@auth.login_required
+def UnSubscribeCatalog(SubscriptionId):
+	""" VIRTUELLE This operation will be used to subscribe to the reception
+	 of terminal catalogues in a car a car park.
+	{Lince Server URL}/api/V1.0/Terminals/CatalogSubscriptions
+	"""
+	print ("UnSubscribe SubscriptionId",SubscriptionId)
+	resp={"Result": 0,"Message": "string"} #Response msg
+	return resp
+
+
+@app.route(BASE_WEB_ADDRESS+'TerminalsSubscriptions',methods=['POST'])
+@auth.login_required
+def SubscribeTerminals():
+	""" VIRTUELLE This operation will be used to subscribe to the reception
+	 of terminals.
+	{Lince Server URL}/api/V1.0/Terminals/TerminalsSubscriptions
+	"""
+	
+	data=request.get_json()
+
+	if data!="":
+		print ("SubscriptionId = ",data["SubscriptionId"],",",
+			" DestinationURLdata = ",data["DestinationURL"],
+			"ParkingTerminals" ,data["ParkingTerminals"][0]["TerminalNumber"]
+			)
+
+	resp={"Result": 0,"Message": "string"} #Response msg
+	return resp
 
 
 @app.route(BASE_WEB_ADDRESS+'Catalog/'+'<parkingId>',methods=['GET'])
