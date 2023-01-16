@@ -26,27 +26,37 @@ p.e
 curl -i http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/TerminalInfo/7/5 -u"axiome:concept"
 curl -i http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/TerminalInfo/7/6 -u"axiome:concept"
 
+GetTerminalInfoAlias
+curl -i http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/TerminalInfo/Parking7/Terminal6 -u"axiome:concept"
+
 GetActiveAlarms
 curl -i http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/ActiveAlarms/{$PARKING_NUM}/{$TERMINAL} -u"axiome:concept"
 p.e
 curl -i http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/ActiveAlarms/7/5 -u"axiome:concept"
 curl -i http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/ActiveAlarms/7/6 -u"axiome:concept"
 
-GetParkingInfo
+GetActiveAlarmsAlias
+curl -i http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/ActiveAlarms/7/Terminal5 -u"axiome:concept"
 
+GetParkingInfo
 curl -i http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/parkingInfo/{$PARKING_NUM} -u"axiome:concept"
 p.e
 curl -i http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/parkingInfo/7 -u"axiome:concept"
 
 GetParkingInfoAlias
-
-curl -i http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/ParkingInfoAlias/{$PARKING_ALIAS} -u"axiome:concept"
+curl -i http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/ParkingInfoalias/Parking{$PARKING_NUM} -u"axiome:concept"
 p.e
-curl -i http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/ParkingInfoAlias/Parking7 -u"axiome:concept"
+curl -i http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/ParkingInfoalias/Parking7 -u"axiome:concept"
 
 SendcontrolCommand
-
+SendModeCommand
 curl -v -X POST -H "Content-type: application/json" -d @command.json http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/ControlCommand
+
+SendLPRCommand
+curl -v -X POST -H "Content-type: application/json" -d @commandLPR.json http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/LPRCommand
+
+IssueTicket
+curl -v -X POST -H "Content-type: application/json" -d @commandTicket.json http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/tiket
 
 
 default
@@ -108,44 +118,36 @@ def GetCatalog(parkingId):
 	return resp
  
 @app.route(BASE_WEB_ADDRESS+'TerminalInfo/'+'<parkingId>'+'/'+'<terminalId>',methods=['GET'])   
+@app.route(BASE_WEB_ADDRESS+'TerminalInfo/Parking'+'<parkingId>'+'/Terminal'+'<terminalId>',methods=['GET'])  
 @auth.login_required
 def GetTerminalInfo(parkingId,terminalId):
 	""" returns came GetTerminalInfo """	
 	return ( str (parkingDB[parkingId][0][terminalId]["GetTerminalInfo"])) 
 
 @app.route(BASE_WEB_ADDRESS+'ActiveAlarms/'+'<parkingId>'+'/'+'<terminalId>',methods=['GET'])
+@app.route(BASE_WEB_ADDRESS+'ActiveAlarms/'+'<parkingId>'+'/Terminal'+'<terminalId>',methods=['GET'])
 @auth.login_required
 def GetActiveAlarms(parkingId,terminalId):
 	""" returns came ActiveAlarms pags. 7,15,34"""	
 	return ( str (parkingDB[parkingId][0][terminalId]["GetActiveAlarms"])) 
 
 @app.route(BASE_WEB_ADDRESS+'parkingInfo/'+'<parkingId>',methods=['GET'])
+@app.route(BASE_WEB_ADDRESS+'ParkingInfoalias/Parking'+'<parkingId>',methods=['GET'])
 @auth.login_required
 def GetParkingInfo(parkingId):
 	""" This operation is used to obtain the car park state summary 14"""
 	return parkingDB[parkingId][1]
    
-@app.route(BASE_WEB_ADDRESS+'ParkingInfoAlias/'+'/'+'<parkingAlias>',methods=['GET'])
-@auth.login_required
-def GetParkingInfoAlias(parkingAlias):
-	""" This operation is used to obtain the car park state summary 14"""
-	
-	for key,value in parkingDB.items():
-		if value[2]==parkingAlias: #parkingInfoValue ?
-			return parkingDB[key][1]
-		
-	return "ParkingInfoAlias not found\n"
-
 
 @app.route(BASE_WEB_ADDRESS+'ControlCommand',methods=['POST'])
+@app.route(BASE_WEB_ADDRESS+'ModeCommand',methods=['POST'])
 #@auth.login_required
 def SendcontrolCommand():
 	""" VIRTUEL send a ctrl. command to a terminal (open barrier ,close ) pags 17 """
 	if request.headers['Content-Type'] != 'application/json':
 		current_app.logger.debug(request.headers['Content-Type'])
 		return jsonify(msg=('Header Error'))
-
-	#data = json.loads(request.data)
+		
 	data=request.get_json()
 	
 	resp={"Result": 0,"Message": "string"} #Response msg
@@ -159,9 +161,47 @@ def SendcontrolCommand():
 	
 	print ("Command Code ",CommandCode,",",state[ ( round (CommandCode/10) )-1])
 
-	
-	#return data
 	return resp
+	
+@app.route(BASE_WEB_ADDRESS+'LPRCommand',methods=['POST'])
+#@auth.login_required
+def SendLPRCommand():
+	""" VIRTUEL Send a command to change LPR operating mode pag 17,27,36 """
+	if request.headers['Content-Type'] != 'application/json':
+		current_app.logger.debug(request.headers['Content-Type'])
+		return jsonify(msg=('Header Error'))
+		
+	data=request.get_json()
+	
+	resp={"Result": 0,"Message": "string"} #Response msg
+
+	LPRMode= data['LPRMode'] #Récupérer le "LPRMode" depuis json
+	
+	#Command LPRCodeModeTypes pag 27
+	state=["Normal","WithoutControl","WithoutMatching","DynamicOutput"]
+	
+	print ("LPRMode ",LPRMode,",",state[ ( round (LPRMode/10) )-1])
+
+	return resp	
+
+@app.route(BASE_WEB_ADDRESS+'tiket',methods=['POST'])
+#@auth.login_required
+def IssueTiket():
+	""" VIRTUEL"""
+	if request.headers['Content-Type'] != 'application/json':
+		current_app.logger.debug(request.headers['Content-Type'])
+		return jsonify(msg=('Header Error'))
+		
+	data=request.get_json()
+	
+	resp={"Result": 0,"Message": "string"} #Response msg
+	
+	tiket=["TicketKind","TicketTypeNumber","TicketDateTime"]
+	for key,value in data.items():
+		if key in tiket:
+			print (key,' = ',value)
+		
+	return resp	
 
 	
 if __name__ == "__main__":
