@@ -44,21 +44,9 @@ curl -i http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/ParkingInf
 p.e
 curl -i http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/ParkingInfoAlias/Parking7 -u"axiome:concept"
 
-
-
 SendcontrolCommand
 
-
-You can post a JSON file using Curl if you pass the filename in the -d command line parameter after the "@" symbol:
-https://reqbin.com/req/c-d2nzjn3z/curl-post-body
-curl -X POST https://reqbin.com/echo/post/json -d @filename
-
--d @/home/icaro/Bureau/came/RESTfull/command.json
-
-curl -X POST http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/ControlCommand -H "Content-Type: application/json" -d /home/icaro/Bureau/came/RESTfull/command.json
-
-OK
-curl -v -X POST http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/ControlCommand -H "Content-Type: application/json" -d '{"a":1,"b":2}'
+curl -v -X POST -H "Content-type: application/json" -d @command.json http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/ControlCommand
 
 
 default
@@ -69,6 +57,7 @@ from flask import Flask
 from flask_httpauth import HTTPBasicAuth #pip install Flask-HTTPAuth
 from flask import jsonify
 from flask import request
+from flask import current_app
 
 
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -152,24 +141,27 @@ def GetParkingInfoAlias(parkingAlias):
 #@auth.login_required
 def SendcontrolCommand():
 	""" VIRTUEL send a ctrl. command to a terminal (open barrier ,close ) pags 17 """
-	data={"Result":0,"Message":"String"}
-	#data = request.get_json(force=True)
-	#data = request.json()	
-	#print ("-----",data)
-	#return jsonify(data)
-	
-	
-
 	if request.headers['Content-Type'] != 'application/json':
 		current_app.logger.debug(request.headers['Content-Type'])
-		return jsonify(msg=_('Header Error'))
+		return jsonify(msg=('Header Error'))
 
 	#data = json.loads(request.data)
 	data=request.get_json()
-
-	#data= request.args.get("ParkingNumber")
 	
-	return "---"
+	resp={"Result": 0,"Message": "string"} #Response msg
+
+	CommandCode= data['CommandCode'] #Récupérer le "CommandCode" depuis json
+	
+	#CommandCodes et ses equivalences pag. 28
+	state=["OpenBarrier","CloseBarrier","LockBarrier","IssueTicket",
+	"OpenDoor","Reset","ClearAlarms","ExtraPulse1","ExtraPulse2",
+	"RestartApp","RebootPC","ShutDownPC","OperationReset"]
+	
+	print ("Command Code ",CommandCode,",",state[ ( round (CommandCode/10) )-1])
+
+	
+	#return data
+	return resp
 
 	
 if __name__ == "__main__":
@@ -181,6 +173,7 @@ if __name__ == "__main__":
 	fichier.close()	
 
 	#print ("Type ",type (parkingDB),parkingDB)
+	
 	
 	#app.run() 
 	app.run( host=hostname,port=PORT)
