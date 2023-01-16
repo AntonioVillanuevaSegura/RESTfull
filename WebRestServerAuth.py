@@ -26,6 +26,12 @@ curl -X POST -H "Content-type: application/json" -d @terminalSubs.json http://lo
 UnSubscribeTerminals
 curl -X POST -H "Content-type: application/json"  http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/TerminalsSubscriptions/1234 -u"axiome:concept"
 
+SubscribeParkingSummary
+curl -X POST -H "Content-type: application/json" -d @parkingSubs.json http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/ParkingSubscriptions -u"axiome:concept"
+
+UnSubscribeParkingSummary
+curl -X POST -H "Content-type: application/json"  http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/ParkingSubscriptions/1234 -u"axiome:concept
+
 GetCatalog
 curl -i http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/Catalog/{$PARKING_NUM} -u"axiome:concept"
 p.e
@@ -167,6 +173,35 @@ def UnSubscribeTerminals(SubscriptionId):
 	 of terminals.
 	{Lince Server URL}/api/V1.0/Terminals/TerminalsSubscriptions
 	"""
+	print ("UnSubscribe SubscriptionId",SubscriptionId)	
+	resp={"Result": 0,"Message": "string"} #Response msg
+	return resp
+
+@app.route(BASE_WEB_ADDRESS+'ParkingSubscriptions',methods=['POST'])
+@auth.login_required
+def SubscribeParkingSummary():
+	""" VIRTUELLE.
+	{Lince Server URL}/api/V1.0/Terminals/TerminalsSubscriptions
+	"""
+	
+	data=request.get_json()
+
+	if data!="":
+		print ("SubscriptionId = ",data["SubscriptionId"],",",
+			" DestinationURLdata = ",data["DestinationURL"]
+			)
+
+	resp={"Result": 0,"Message": "string"} #Response msg
+	return resp
+
+@app.route(BASE_WEB_ADDRESS+'ParkingSubscriptions/'+'<SubscriptionId>',methods=['POST'])
+@auth.login_required
+def UnSubscribeParkingSummary(SubscriptionId):
+	""" VIRTUELLE.
+	{Lince Server URL}/api/V1.0/Terminals/TerminalsSubscriptions
+	"""
+	
+	print ("UnSubscribe SubscriptionId",SubscriptionId)	
 	
 	resp={"Result": 0,"Message": "string"} #Response msg
 	return resp

@@ -1,0 +1,8 @@
+{
+"OperatorId": "OperatorExample",
+"SubscriptionId": "1234",
+"ParkingNumber": 7,
+"ParkingAlias": "Parking7",
+"SubscriptionType": 0,
+"DestinationURL": "http://test.parkare.com/webapi/"
+}
