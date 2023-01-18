@@ -31,7 +31,19 @@ GetActiveAlarms.c
  * comment compiler ce fichier 
  *  gcc -Wall -o GetActiveAlarms GetActiveAlarms.c -lcurl
  
- 
+SendcontrolCommand.c
+
+ * SendcontrolCommand
+ * SendModeCommand
+ * equivalent curl 
+ * curl -v -X POST -H "Content-type: application/json" -d @command.json http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/ControlCommand
+ * 
+ * La demande est faite à http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/ControlCommand
+ * et utilise  login et le mot de passe     -u"axiome:concept"
+ * Utilise le fichier externe  command.json
+ * 
+ * comment compiler ce fichier 
+ *  gcc -Wall -o SendcontrolCommand SendcontrolCommand.c -lcurl
  
 Les tests peuvent être exécutés directement en curl comme ceci, dans certains cas il faut utiliser des fichiers de données de type *.json
 qui sont fournis dans le répertoire
