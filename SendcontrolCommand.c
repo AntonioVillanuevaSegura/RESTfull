@@ -7,11 +7,11 @@
  * curl -v -X POST -H "Content-type: application/json" -d @command.json http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/ControlCommand
  * 
  * La demande est faite à http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/ControlCommand
- * et utilisez le login et le mot de passe -u"axiome:concept"
+ * et utilise  login et le mot de passe     -u"axiome:concept"
  * Utilise le fichier externe  command.json
  * 
  * comment compiler ce fichier 
- *  gcc -Wall -o GetActiveAlarms GetActiveAlarms.c -lcurl
+ *  gcc -Wall -o SendcontrolCommand SendcontrolCommand.c -lcurl
  * 
  *  notes :
  * 	https://curl.se/libcurl/c/curl_easy_setopt.html
@@ -35,6 +35,9 @@
 char url_base[64]="http://"; 
 
 void makeURL(char  op[]){
+   //Construire l'URL utilise un préfixe de base http://localhost/Int/Terminals/TerminaLsWebApi/Terminals/
+   // et ajoute l'operation dans cet cas ControlCommand
+
   strcat (url_base,HOSTNAME);
   strcat (url_base,BASE_WEB_ADDRESS);
   strcat (url_base,op);
@@ -45,10 +48,12 @@ int main(int argc, char *argv[])
 	CURL *hnd;
 	CURLcode res;
 	
-
+	//Cree headers type Content-Type: application/jso
     struct curl_slist *headers = NULL;
     headers = curl_slist_append(headers, "Content-Type: application/json");   //json file 
     
+    
+    //Charger le fichier externe au format json
     char *json_string;
     FILE *json_file;
     
@@ -70,16 +75,14 @@ int main(int argc, char *argv[])
     fread(json_string, 1, json_len, json_file);
     fclose(json_file);    
 
-	
-	
-	
-	
+    //FIN Charger le fichier externe au format json
+
 	//makeURL("CatalogSubscriptions");//Subscriptions
 	//makeURL("ActiveAlarms/7/5");	
 	makeURL("ControlCommand");		
 	printf ("%s\n",url_base);//DEBUG URL
 
-	hnd = curl_easy_init();
+	hnd = curl_easy_init();//hander curl 
 
 	if (hnd) {	  
 		
