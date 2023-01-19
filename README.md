@@ -1,6 +1,6 @@
 Batterie de tests de base pour effectuer des tests avec le système CAME PARKARE
 
-Serveur de base RESfull pour bornes de stationnement WebRestServerAuth.py
+Serveur de base RESTfull pour bornes de stationnement WebRestServerAuth.py
 python3 WebRestServerAuth.py
 
 Les tests peuvent être effectués directement avec curl  ( ou certains tests depuis le c )
