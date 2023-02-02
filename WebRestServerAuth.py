@@ -85,7 +85,7 @@ from flask import jsonify
 from flask import request
 from flask import current_app
 
-
+import socket #for get local ip
 from werkzeug.security import generate_password_hash, check_password_hash
 import json 
 import os,sys #For path file ;)
@@ -306,8 +306,13 @@ def IssueTiket():
 			print (key,' = ',value)
 		
 	return resp	
+ip_address = socket.gethostbyname(hostname)
 
-	
+def get_ip_address():
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s.connect(("8.8.8.8", 80))
+    return s.getsockname()[0]
+    	
 if __name__ == "__main__":
 	
 	#fichier = open('data.txt')
@@ -318,6 +323,7 @@ if __name__ == "__main__":
 
 	#print ("Type ",type (parkingDB),parkingDB)
 	
-	
+	hostname = get_ip_address() #comment this ligne for hostname http://hostname 
+
 	#app.run() 
 	app.run( host=hostname,port=PORT)
