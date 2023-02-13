@@ -4,7 +4,7 @@
 	"ParkingNumber": 7,
 	"ParkingAlias": "Parking7",
 	"SubscriptionType": 0,
-	"DestinationURL": "http://test.parkare.com/webapi/",
+	"DestinationURL": "/test.parkare.com/webapi/",
 	"ParkingTerminals": [
 		{
 		"TerminalNumber": 5,
