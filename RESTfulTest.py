@@ -192,11 +192,16 @@ class InterfaceGraphique(tk.Tk):
 			
 		self.responseLabel.config(text =req)	
 		
+
 		try:		
 			self.jsonLabel.config(text = json.dumps (req.json(),indent=3)   )
 
 		except json.decoder.JSONDecodeError:
 			self.jsonLabel.config(text =" pas de données JSON"   )
+			
+		except AttributeError:
+			self.jsonLabel.config(text =" pas de données JSON"   )			
+			
 			
 	def endApplication(self):
 		self.running = 0			
