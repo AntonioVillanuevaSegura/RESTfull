@@ -7,6 +7,8 @@ RESTfulTest.py est ajouté en tant que client pour effectuer des tests vers le s
 
 python3 RESTfulTest.py
 
+Lien vers la vidéo de démonstration   --- > https://youtu.be/GZNs8_t11go 
+
 Les tests peuvent être effectués directement avec curl  ( ou certains tests depuis le c )
 
 RestClientCatalogSubs.c
