@@ -191,7 +191,8 @@ class InterfaceGraphique(tk.Tk):
 		req=self.getRequests(text)	
 			
 		self.responseLabel.config(text =req)	
-		
+
+		self.jsonLabel.config(text =""   )			
 
 		try:		
 			self.jsonLabel.config(text = json.dumps (req.json(),indent=3)   )
@@ -201,7 +202,6 @@ class InterfaceGraphique(tk.Tk):
 			
 		except AttributeError:
 			self.jsonLabel.config(text =" pas de données JSON"   )			
-			
 			
 	def endApplication(self):
 		self.running = 0			
@@ -234,17 +234,17 @@ class InterfaceGraphique(tk.Tk):
 		command["DispatchDateTime"]=str (date.today())+"T11:"+str (current_time)+"9Z"	 
 		ticket["DispatchDateTime"]=str (date.today())+"T11:"+str (current_time)+"9Z"	
 		ticket["TicketDateTime"]=ticket["DispatchDateTime"]			
-		
-		print (json.dumps(command))#Debug
-						
+								
 		try:
 			if (text == "GET"):				
 				response=requests.get (url, auth = (self.slogin.get(),self.spwd.get()) ,headers=headers)
 			else:#POST
 				if "ticket" in str( url):
-					response=requests.post (url,json=json.dumps(ticket), auth = (self.slogin.get(),self.spwd.get()) ,headers=headers)		
+					response=requests.post (url,json=json.dumps(ticket), auth = (self.slogin.get(),self.spwd.get()) ,headers=headers)
+					print (json.dumps(ticket))#Debug							
 				else:
 					response=requests.post (url,json=json.dumps(command), auth = (self.slogin.get(),self.spwd.get()) ,headers=headers)
+					print (json.dumps(command))#Debug
 
 		except ConnectionError:
 			return -1 #'NoneType'
