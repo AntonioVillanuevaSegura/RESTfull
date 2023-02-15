@@ -1,0 +1,9 @@
+{
+	"AlarmsInfo": [
+		{
+		"AlarmCode": 0,
+		"AlarmDescription": "Sin papel",
+		"AlarmSubcode": 1
+		}
+	]
+}

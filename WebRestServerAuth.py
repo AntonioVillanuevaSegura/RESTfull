@@ -119,6 +119,8 @@ hostname ="localhost" # ip ... ou 127.0.0.1 pour tests
 PORT=5000 #Port RESTfull web server
 EXT_JSON_FILE="parking.json" #fichier de base de données externe
 TERMINAL_STATE_JSON ="terminalState.json" #fichier simulation envoi terminal subscribe
+TERMINAL_INFO_JSON="terminalInfo.json"
+ACTIVE_ALARMS_JSON="activeAlarms.json"
 
 subcriptions={#Le client est abonné aux terminaux ? SubscribeTerminals?
 	"SubscribeTerminals":False,
@@ -270,7 +272,8 @@ def GetCatalog(parkingId):
 @auth.login_required
 def GetTerminalInfo(parkingId,terminalId):
 	""" returns came GetTerminalInfo """	
-	return ( str (parkingDB[parkingId][0][terminalId]["GetTerminalInfo"])) 
+	#return ( str (parkingDB[parkingId][0][terminalId]["GetTerminalInfo"])) 
+	return terminalInfo
 
 @app.route(BASE_WEB_ADDRESS+'ActiveAlarms/'+'<parkingId>'+'/'+'<terminalId>',methods=['GET'])
 @app.route(BASE_WEB_ADDRESS+'ActiveAlarms/'+'<parkingId>'+'/Terminal'+'<terminalId>',methods=['GET'])
@@ -279,7 +282,8 @@ def GetTerminalInfo(parkingId,terminalId):
 @auth.login_required
 def GetActiveAlarms(parkingId,terminalId):
 	""" returns came ActiveAlarms pags. 7,15,34"""	
-	return ( str (parkingDB[parkingId][0][terminalId]["GetActiveAlarms"])) 
+	#return ( str (parkingDB[parkingId][0][terminalId]["GetActiveAlarms"])) 
+	return activeAlarms
 
 @app.route(BASE_WEB_ADDRESS+'ParkingInfo/'+'<parkingId>',methods=['GET'])
 @app.route(BASE_WEB_ADDRESS+'ParkingInfoalias/Parking'+'<parkingId>',methods=['GET'])
@@ -419,8 +423,6 @@ class subcriptionVirtuelles(threading.Thread):
 			time.sleep(5) # Attendre x secondes avant de recommencer
 				
 def sendData(data):
-	
-
 	""" Envoi des données json au client abonné 	"""
 	url = "http://"+subcriptions["DestinationURL"]
 
@@ -438,19 +440,23 @@ def sendData(data):
 if __name__ == "__main__":
 	
 	#fichier = open('data.txt')
-	fichier = open(os.path.join(sys.path[0], EXT_JSON_FILE), "r")	
-	
+	fichier = open(os.path.join(sys.path[0], EXT_JSON_FILE), "r")		
 	parkingDB=json.load(fichier) #To parse JSON from file json.load() returns dictionary
 	fichier.close()	
 
-	fichier = open(os.path.join(sys.path[0], TERMINAL_STATE_JSON), "r")	
-	
+	fichier = open(os.path.join(sys.path[0], TERMINAL_STATE_JSON), "r")		
 	terminalEmulation=json.load(fichier) #To parse JSON from file json.load() returns dictionary
-	
-
 	fichier.close()	
 	
-	printJson (terminalEmulation)
+	fichier = open(os.path.join(sys.path[0], TERMINAL_INFO_JSON), "r")		
+	terminalInfo=json.load(fichier) #To parse JSON from file json.load() returns dictionary
+	fichier.close()		
+	
+	fichier = open(os.path.join(sys.path[0], ACTIVE_ALARMS_JSON), "r")		
+	activeAlarms=json.load(fichier) #To parse JSON from file json.load() returns dictionary
+	fichier.close()		
+		
+	#printJson (terminalEmulation) #DEBUG
 
 	"""Crée une émulation dans un thread ,
 	Pour envoyer des données depuis un Terminal si  on a effectue "SubscribeTerminals"

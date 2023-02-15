@@ -1,0 +1,27 @@
+{
+	"TerminalType": 0,
+	"TerminalNumber": 5,
+	"TerminalAlias": "Terminal5",
+	"Version": "1.2",
+	"ConfigCode": "Code Test",
+	"ConfigDate": "12/11/2019 12:13:25",
+	"DevicesInfo": [
+		{
+			"DeviceId": 0,
+			"DeviceDescription": "test description",
+			"DeviceVersion": "version test"
+		}
+	],
+	"TerminalMode": {
+		"TerminalNumber": 5,
+		"TerminalAlias": " Terminal5",
+		"Locked": true,
+		"Emergency": true,
+		"FreeExit": true,
+		"PaidAssisted": true,
+		"WithoutAntipass": true,
+		"FloodgateDisabled": true,
+		"LPRMode": 10
+	},
+	"TerminalState": {}
+}
