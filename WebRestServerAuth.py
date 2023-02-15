@@ -59,9 +59,9 @@ GetActiveAlarmsAlias
 curl -i http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/ActiveAlarms/7/Terminal5 -u"axiome:concept"
 
 GetParkingInfo
-curl -i http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/parkingInfo/{$PARKING_NUM} -u"axiome:concept"
+curl -i http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/ParkingInfo/{$PARKING_NUM} -u"axiome:concept"
 p.e
-curl -i http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/parkingInfo/7 -u"axiome:concept"
+curl -i http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/ParkingInfo/7 -u"axiome:concept"
 
 GetParkingInfoAlias
 curl -i http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/ParkingInfoalias/Parking{$PARKING_NUM} -u"axiome:concept"
@@ -113,7 +113,7 @@ users = {
     "OperatorExample": generate_password_hash("came")
 }
 auth = HTTPBasicAuth()
-
+BASE_WEB_ADDRESS2="/api/V1.0/Terminals/"
 BASE_WEB_ADDRESS="/Int/Terminals/TerminaLsWebApi/Terminals/" #Adresse de base de l'adresse Web RESTful
 hostname ="localhost" # ip ... ou 127.0.0.1 pour tests
 PORT=5000 #Port RESTfull web server
@@ -145,6 +145,7 @@ def default():
 	return jsonify({'Base Web address':BASE_WEB_ADDRESS})
 
 @app.route(BASE_WEB_ADDRESS+'CatalogSubscriptions',methods=['POST'])
+@app.route(BASE_WEB_ADDRESS2+'CatalogSubscriptions',methods=['POST'])
 @auth.login_required
 def SubscribeCatalog():
 	""" VIRTUELLE This operation will be used to subscribe to the reception
@@ -161,6 +162,7 @@ def SubscribeCatalog():
 	return resp
 
 @app.route(BASE_WEB_ADDRESS+'CatalogSubscriptions/'+'<SubscriptionId>',methods=['DELETE'])
+@app.route(BASE_WEB_ADDRESS2+'CatalogSubscriptions/'+'<SubscriptionId>',methods=['DELETE'])
 @auth.login_required
 def UnSubscribeCatalog(SubscriptionId):
 	""" VIRTUELLE This operation will be used to subscribe to the reception
@@ -171,6 +173,7 @@ def UnSubscribeCatalog(SubscriptionId):
 	resp={"Result": 0,"Message": "string"} #Response msg
 	return resp
 
+@app.route(BASE_WEB_ADDRESS2+'TerminalsSubscriptions',methods=['POST'])
 @app.route(BASE_WEB_ADDRESS+'TerminalsSubscriptions',methods=['POST'])
 @auth.login_required
 def SubscribeTerminals():
@@ -200,6 +203,7 @@ def SubscribeTerminals():
 
 	return resp
 
+@app.route(BASE_WEB_ADDRESS2+'TerminalsSubscriptions/'+'<SubscriptionId>',methods=['DELETE'])
 @app.route(BASE_WEB_ADDRESS+'TerminalsSubscriptions/'+'<SubscriptionId>',methods=['DELETE'])
 @auth.login_required
 def UnSubscribeTerminals(SubscriptionId):
@@ -212,6 +216,7 @@ def UnSubscribeTerminals(SubscriptionId):
 	resp={"Result": 0,"Message": "string"} #Response msg
 	return resp
 
+@app.route(BASE_WEB_ADDRESS2+'ParkingSubscriptions',methods=['POST'])
 @app.route(BASE_WEB_ADDRESS+'ParkingSubscriptions',methods=['POST'])
 @auth.login_required
 def SubscribeParkingSummary():
@@ -229,6 +234,7 @@ def SubscribeParkingSummary():
 	resp={"Result": 0,"Message": "string"} #Response msg
 	return resp
 
+@app.route(BASE_WEB_ADDRESS2+'ParkingSubscriptions/'+'<SubscriptionId>',methods=['DELETE'])
 @app.route(BASE_WEB_ADDRESS+'ParkingSubscriptions/'+'<SubscriptionId>',methods=['DELETE'])
 @auth.login_required
 def UnSubscribeParkingSummary(SubscriptionId):
@@ -242,6 +248,7 @@ def UnSubscribeParkingSummary(SubscriptionId):
 	return resp
 
 @app.route(BASE_WEB_ADDRESS+'Catalog/'+'<parkingId>',methods=['GET'])
+@app.route(BASE_WEB_ADDRESS2+'Catalog/'+'<parkingId>',methods=['GET'])
 @auth.login_required
 def GetCatalog(parkingId):
 	"""This operation will be used to obtain the terminal catalogue in a car park.s 
@@ -257,7 +264,9 @@ def GetCatalog(parkingId):
 	return resp
  
 @app.route(BASE_WEB_ADDRESS+'TerminalInfo/'+'<parkingId>'+'/'+'<terminalId>',methods=['GET'])   
-@app.route(BASE_WEB_ADDRESS+'TerminalInfo/Parking'+'<parkingId>'+'/Terminal'+'<terminalId>',methods=['GET'])  
+@app.route(BASE_WEB_ADDRESS+'TerminalInfo/Parking'+'<parkingId>'+'/Terminal'+'<terminalId>',methods=['GET']) 
+@app.route(BASE_WEB_ADDRESS2+'TerminalInfo/'+'<parkingId>'+'/'+'<terminalId>',methods=['GET'])   
+@app.route(BASE_WEB_ADDRESS2+'TerminalInfo/Parking'+'<parkingId>'+'/Terminal'+'<terminalId>',methods=['GET'])  
 @auth.login_required
 def GetTerminalInfo(parkingId,terminalId):
 	""" returns came GetTerminalInfo """	
@@ -265,13 +274,17 @@ def GetTerminalInfo(parkingId,terminalId):
 
 @app.route(BASE_WEB_ADDRESS+'ActiveAlarms/'+'<parkingId>'+'/'+'<terminalId>',methods=['GET'])
 @app.route(BASE_WEB_ADDRESS+'ActiveAlarms/'+'<parkingId>'+'/Terminal'+'<terminalId>',methods=['GET'])
+@app.route(BASE_WEB_ADDRESS2+'ActiveAlarms/'+'<parkingId>'+'/'+'<terminalId>',methods=['GET'])
+@app.route(BASE_WEB_ADDRESS2+'ActiveAlarms/'+'<parkingId>'+'/Terminal'+'<terminalId>',methods=['GET'])
 @auth.login_required
 def GetActiveAlarms(parkingId,terminalId):
 	""" returns came ActiveAlarms pags. 7,15,34"""	
 	return ( str (parkingDB[parkingId][0][terminalId]["GetActiveAlarms"])) 
 
-@app.route(BASE_WEB_ADDRESS+'parkingInfo/'+'<parkingId>',methods=['GET'])
+@app.route(BASE_WEB_ADDRESS+'ParkingInfo/'+'<parkingId>',methods=['GET'])
 @app.route(BASE_WEB_ADDRESS+'ParkingInfoalias/Parking'+'<parkingId>',methods=['GET'])
+@app.route(BASE_WEB_ADDRESS2+'ParkingInfo/'+'<parkingId>',methods=['GET'])
+@app.route(BASE_WEB_ADDRESS2+'ParkingInfoalias/Parking'+'<parkingId>',methods=['GET'])
 @auth.login_required
 def GetParkingInfo(parkingId):
 	""" This operation is used to obtain the car park state summary 14"""
@@ -279,6 +292,8 @@ def GetParkingInfo(parkingId):
    
 @app.route(BASE_WEB_ADDRESS+'ControlCommand',methods=['POST'])
 @app.route(BASE_WEB_ADDRESS+'ModeCommand',methods=['POST'])
+@app.route(BASE_WEB_ADDRESS2+'ControlCommand',methods=['POST'])
+@app.route(BASE_WEB_ADDRESS2+'ModeCommand',methods=['POST'])
 #@auth.login_required
 def SendcontrolCommand():
 	""" VIRTUEL send a ctrl. command to a terminal (open barrier ,close ) pags 17 """
@@ -286,7 +301,8 @@ def SendcontrolCommand():
 		current_app.logger.debug(request.headers['Content-Type'])
 		return jsonify(msg=('Header Error'))
 		
-	data=request.get_json()
+	data=json.loads (request.get_json())
+	
 	
 	resp={"Result": 0,"Message": "string"} #Response msg
 
@@ -302,6 +318,7 @@ def SendcontrolCommand():
 	return resp
 	
 @app.route(BASE_WEB_ADDRESS+'LPRCommand',methods=['POST'])
+@app.route(BASE_WEB_ADDRESS2+'LPRCommand',methods=['POST'])
 #@auth.login_required
 def SendLPRCommand():
 	""" VIRTUEL Send a command to change LPR operating mode pag 17,27,36 """
@@ -309,7 +326,7 @@ def SendLPRCommand():
 		current_app.logger.debug(request.headers['Content-Type'])
 		return jsonify(msg=('Header Error'))
 		
-	data=request.get_json()
+	data=json.loads (request.get_json())
 	
 	resp={"Result": 0,"Message": "string"} #Response msg
 
@@ -322,7 +339,8 @@ def SendLPRCommand():
 
 	return resp	
 
-@app.route(BASE_WEB_ADDRESS+'tiket',methods=['POST'])
+@app.route(BASE_WEB_ADDRESS+'ticket/',methods=['POST'])
+@app.route(BASE_WEB_ADDRESS2+'ticket/',methods=['POST'])
 #@auth.login_required
 def IssueTiket():
 	""" VIRTUEL"""
@@ -330,7 +348,9 @@ def IssueTiket():
 		current_app.logger.debug(request.headers['Content-Type'])
 		return jsonify(msg=('Header Error'))
 		
-	data=request.get_json()
+	data=json.loads (request.get_json())
+	
+	print ("DEBUG ", type (data))
 	
 	resp={"Result": 0,"Message": "string"} #Response msg
 	
@@ -379,6 +399,8 @@ class subcriptionVirtuelles(threading.Thread):
 		self.fichier["LicensePlate"] = (chr (random.randint(65,90)) + chr (random.randint(65,90)) + '-'
 		+str(random.randint(100,999)) + "-" + str(	random.randint(10,95)))
 		self.fichier["CustomerCode"]=str (random.randint(100,999))	
+		
+		self.fichier["AmountToPay"]=str (random.randint(0,100))			
 			
 	def run(self):
 		""" Noyau principal de fil """

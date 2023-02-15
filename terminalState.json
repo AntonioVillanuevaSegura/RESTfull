@@ -1,0 +1,19 @@
+{
+	"TerminalNumber":0,
+	"TerminalAlias":"terminal",
+	"ServiceStatus":0,
+	"OperationStatus":0,
+	"VehiclePresent":true,
+	"VehicleType":0,
+	"VehicleTypeDescription":"voiture",
+	"LicensePlate":"WYZ 690",
+	"ValidationResult":0,
+	"ValidationResultDescription":"?",
+	"AmountToPay":"20",
+	"BarrierOpened":false,
+	"BarrierLoopActive":true,
+	"CustomerIdentified Boolean":true,
+	"CustomerType":0,
+	"CustomerTypeDescription":"abonne",
+	"CustomerCode":"XXX"
+}
