@@ -3,6 +3,10 @@ Batterie de tests de base pour effectuer des tests avec le système CAME PARKARE
 Serveur de base RESTfull pour bornes de stationnement WebRestServerAuth.py
 python3 WebRestServerAuth.py
 
+RESTfulTest.py est ajouté en tant que client pour effectuer des tests vers le serveur Lince
+
+python3 RESTfulTest.py
+
 Les tests peuvent être effectués directement avec curl  ( ou certains tests depuis le c )
 
 RestClientCatalogSubs.c
@@ -48,26 +52,25 @@ SendcontrolCommand.c
 Les tests peuvent être exécutés directement en curl comme ceci, dans certains cas il faut utiliser des fichiers de données de type *.json
 qui sont fournis dans le répertoire
   
-  
-  Example Commandes qu'on peut exécuter dans curl
+Example Commandes qu'on peut exécuter dans curl
 
 SubscribeCatalog (Déployé virtuellement)
 curl -X POST -H "Content-type: application/json" -d @catalogSubs.json http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/CatalogSubscriptions -u"axiome:concept"
 
 UnSubscribeCatalog
-curl -X POST -H "Content-type: application/json"  http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/CatalogSubscriptions/1234 -u"axiome:concept"
+curl -X DELETE -H "Content-type: application/json"  http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/CatalogSubscriptions/1234 -u"axiome:concept"
 
 SubscribeTerminals
 curl -X POST -H "Content-type: application/json" -d @terminalSubs.json http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/TerminalsSubscriptions -u"axiome:concept"
 
 UnSubscribeTerminals
-curl -X POST -H "Content-type: application/json"  http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/TerminalsSubscriptions/1234 -u"axiome:concept"
+curl -X DELETE -H "Content-type: application/json"  http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/TerminalsSubscriptions/1234 -u"axiome:concept"
 
 SubscribeParkingSummary
 curl -X POST -H "Content-type: application/json" -d @parkingSubs.json http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/ParkingSubscriptions -u"axiome:concept"
 
 UnSubscribeParkingSummary
-curl -X POST -H "Content-type: application/json"  http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/ParkingSubscriptions/1234 -u"axiome:concept
+curl -X DELETE -H "Content-type: application/json"  http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/ParkingSubscriptions/1234 -u"axiome:concept
 
 GetCatalog
 curl -i http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/Catalog/{$PARKING_NUM} -u"axiome:concept"
@@ -93,9 +96,9 @@ GetActiveAlarmsAlias
 curl -i http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/ActiveAlarms/7/Terminal5 -u"axiome:concept"
 
 GetParkingInfo
-curl -i http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/parkingInfo/{$PARKING_NUM} -u"axiome:concept"
+curl -i http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/ParkingInfo/{$PARKING_NUM} -u"axiome:concept"
 p.e
-curl -i http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/parkingInfo/7 -u"axiome:concept"
+curl -i http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/ParkingInfo/7 -u"axiome:concept"
 
 GetParkingInfoAlias
 curl -i http://localhost:5000/Int/Terminals/TerminaLsWebApi/Terminals/ParkingInfoalias/Parking{$PARKING_NUM} -u"axiome:concept"
@@ -114,4 +117,7 @@ curl -v -X POST -H "Content-type: application/json" -d @commandTicket.json http:
 
 default
 curl -i http://localhost:5000
+
+POST to Client
+curl -X POST -H "Content-type: application/json" -d @parkingSubs.json http://192.168.1.81:5000//test.parkare.com/webapi/ 
   
