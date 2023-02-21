@@ -12,7 +12,7 @@
 	"AmountToPay":"20",
 	"BarrierOpened":false,
 	"BarrierLoopActive":true,
-	"CustomerIdentified Boolean":true,
+	"CustomerIdentified":true,
 	"CustomerType":0,
 	"CustomerTypeDescription":"abonne",
 	"CustomerCode":"XXX"

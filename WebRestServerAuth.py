@@ -307,7 +307,9 @@ def SendcontrolCommand():
 		
 	data=json.loads (request.get_json())
 	
-	
+	print ("DEBUG SendcontrolCommand  ")#DEBUG
+	printJson (data)#DEBUG
+		
 	resp={"Result": 0,"Message": "string"} #Response msg
 
 	CommandCode= data['CommandCode'] #Récupérer le "CommandCode" depuis json
@@ -396,9 +398,11 @@ class subcriptionVirtuelles(threading.Thread):
 		
 	def changeStates(self):
 		""" Créer l'illusion de changer d'état dans un terminal """
+		self.fichier["TerminalNumber"] =random.randint(5,7)
+		self.fichier["TerminalAlias"] ="terminal"+ str (self.fichier["TerminalNumber"])		
 		self.fichier["BarrierOpened"] =  not self.fichier["BarrierOpened"]
 		self.fichier["BarrierLoopActive"] =  self.fichier["BarrierOpened"]
-		self.fichier["CustomerIdentified Boolean"] = not self.fichier["CustomerIdentified Boolean"]	
+		self.fichier["CustomerIdentified"] = not self.fichier["CustomerIdentified"]	
 		#self.fichier["LicensePlate"] = "G624-06"	
 		self.fichier["LicensePlate"] = (chr (random.randint(65,90)) + chr (random.randint(65,90)) + '-'
 		+str(random.randint(100,999)) + "-" + str(	random.randint(10,95)))
